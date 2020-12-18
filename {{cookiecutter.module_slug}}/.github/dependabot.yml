@@ -1,0 +1,26 @@
+version: 2
+updates:
+{%- if cookiecutter.dependabot_github_actions == "y" %}
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+{% endif -%}
+{%- if cookiecutter.dependabot_pip == "y" %}
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+{% endif -%}
+{%- if cookiecutter.dependabot_gitsubmodule == "y" %}
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    schedule:
+      interval: "daily"
+{% endif -%}
+{%- if cookiecutter.dependabot_docker == "y" %}
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+{% endif -%}

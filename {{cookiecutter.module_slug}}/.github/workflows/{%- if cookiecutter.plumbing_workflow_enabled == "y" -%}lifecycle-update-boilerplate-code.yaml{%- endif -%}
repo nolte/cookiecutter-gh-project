@@ -1,0 +1,153 @@
+name: Generate Boilerplate Code
+
+on:
+  workflow_dispatch:
+
+jobs:
+  static:
+    name: "Generate Boilerplate Code"
+    runs-on: ubuntu-20.04
+    steps:
+
+      - run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+
+      - name: Checkout sources
+        uses: actions/checkout@v2.3.4
+        with:
+          ref: {{"${{"}} github.head_ref {{"}}"}}
+          path: sources/{{ cookiecutter.module_slug }}
+
+      - uses: actions/github-script@v3.1.0
+        id: boilerplate-update-branch-exists
+        with:
+          github-token: {{"${{"}}secrets.GITHUB_TOKEN}}
+          script: |
+            try {
+              const result = await github.repos.getBranch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                branch: "lifecycle/boilerplate-update",
+              })
+              // console.log(result)
+              // file exists
+            } catch (error) {
+              // console.log(error)
+              return false
+            }
+            return true
+
+      - name: Checkout boilerplate update branch if exists
+        uses: actions/checkout@v2.3.4
+        if: steps.boilerplate-update-branch-exists.outputs.result == 'true'
+        with:
+          ref: "lifecycle/boilerplate-update"
+          path: boilerplate-update/{{ cookiecutter.module_slug }}
+          persist-credentials: false
+
+      - name: Checkout Original to update path
+        if: steps.boilerplate-update-branch-exists.outputs.result == 'false'
+        uses: actions/checkout@v2.3.4
+        with:
+          ref: {{"${{"}} github.head_ref {{"}}"}}
+          path: boilerplate-update/{{ cookiecutter.module_slug }}
+          persist-credentials: false
+
+      - name: create new branch for integrate changes
+        run: |
+          ls -all
+          ls sources -all
+          ls boilerplate-update -all
+
+      - name: create new branch for integrate changes
+        if: steps.boilerplate-update-branch-exists.outputs.result == 'false'
+        working-directory: boilerplate-update/{{ cookiecutter.module_slug }}
+        run: |
+          git switch -c lifecycle/boilerplate-update
+
+      # https://github.com/actions/checkout#Fetch-all-branches
+      - name: merge changes into existing update branch
+        if: steps.boilerplate-update-branch-exists.outputs.result == 'true'
+        working-directory: boilerplate-update/{{ cookiecutter.module_slug }}
+        run: |
+          git fetch --prune --unshallow
+          git merge origin/develop -X theirs
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: {{"${{"}} runner.os {{"}}"}}-pip-{{"${{"}} hashFiles('**/requirements.txt') {{"}}"}}
+          restore-keys: |
+            {{"${{"}} runner.os {{"}}"}}-pip-
+
+      - uses: actions/setup-python@v2
+      - uses: BSFishy/pip-action@v1
+        with:
+          packages: |
+            cookiecutter
+
+      - name: Generate Boilerplate Code from Template
+        working-directory: boilerplate-update/
+        run: |
+          cookiecutter {{ cookiecutter.plumbing_workflow_source }} \
+            module_slug="{{ cookiecutter.module_slug }}" \
+            topics="{{ cookiecutter.topics }}" \
+            description="{{ cookiecutter.description }}" \
+            template_issues="{{ cookiecutter.template_issues }}" \
+            template_pull_request="{{ cookiecutter.template_pull_request }}" \
+            plumbing_workflow_enabled="{{ cookiecutter.template_pull_request }}" \
+{%- if cookiecutter.plumbing_workflow_source != "gh:nolte/cookiecutter-gh-project" %}
+            plumbing_workflow_source="{{cookiecutter.plumbing_workflow_source}}" \
+{%- endif %}
+            dependabot_github_actions="{{ cookiecutter.dependabot_github_actions }}" \
+            dependabot_pip="{{ cookiecutter.dependabot_pip }}" \
+            dependabot_gitsubmodule="{{ cookiecutter.dependabot_gitsubmodule }}" \
+            dependabot_docker="{{ cookiecutter.dependabot_docker }}" \
+            -f --no-input
+
+      - name: Check if there are changes
+        id: changes
+        uses: nolte/has-changes-action@feature/subdirectory
+        with:
+          workingdirectory: boilerplate-update/{{ cookiecutter.module_slug }}
+
+      - name: commit changes if exists
+        if: steps.changes.outputs.changed == 1
+        working-directory: boilerplate-update/{{ cookiecutter.module_slug }}
+        run: |
+          git add .
+          git commit -m "update boilercode"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        if: steps.changes.outputs.changed == 1
+        with:
+          github_token: {{"${{"}} secrets.GH_WORKFLOW_TOKEN {{"}}"}}
+          branch: lifecycle/boilerplate-update
+          directory: boilerplate-update/{{ cookiecutter.module_slug }}
+
+      - uses: actions/github-script@v3.1.0
+        if: steps.changes.outputs.changed == 1
+        with:
+          github-token: {{"${{"}}secrets.GITHUB_TOKEN{{"}}"}}
+          script: |
+            openPrs = await github.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              head: "lifecycle/boilerplate-update",
+              base: "develop"
+            });
+            console.log(openPrs)
+            if (openPrs.data.length > 0) {
+              console.log("PR Allways Exists")
+            } else {
+              await github.pulls.create({
+                title: "update boilercode",
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: "lifecycle/boilerplate-update",
+                base: "develop"
+              });
+            }

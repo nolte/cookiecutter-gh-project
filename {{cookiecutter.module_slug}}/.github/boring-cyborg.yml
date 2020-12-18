@@ -1,0 +1,4 @@
+---
+# These settings are synced to GitHub by https://probot.github.io/apps/boring-cyborg/
+
+_extends: {{cookiecutter.plumbing_repo}}:.github/commons-boring-cyborg.yml

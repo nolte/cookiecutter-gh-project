@@ -1,0 +1,4 @@
+---
+# These settings are synced to GitHub by https://probot.github.io/apps/stale/
+
+_extends: {{cookiecutter.plumbing_repo}}:.github/commons-stale.yml

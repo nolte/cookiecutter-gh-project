@@ -54,7 +54,7 @@ jobs:
           path: boilerplate-update/cookiecutter-gh-project
           persist-credentials: false
 
-      - name: create new branch for integrate changes
+      - name: Debug
         run: |
           ls -all
           ls sources -all

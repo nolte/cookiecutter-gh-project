@@ -30,16 +30,13 @@ jobs:
                 repo: context.repo.repo,
                 branch: "lifecycle/boilerplate-update",
               })
-              console.log(result)
+              // console.log(result)
               // file exists
             } catch (error) {
-              console.log(error)
+              // console.log(error)
               return false
             }
             return true
-
-      - name: Get result
-        run: echo "${{steps.boilerplate-update-branch-exists.outputs.result}}"
 
       - name: Checkout boilerplate update branch if exists
         uses: actions/checkout@v2.3.4
@@ -47,6 +44,7 @@ jobs:
         with:
           ref: "lifecycle/boilerplate-update"
           path: boilerplate-update/cookiecutter-gh-project
+          persist-credentials: false
 
       - name: Checkout Original to update path
         if: steps.boilerplate-update-branch-exists.outputs.result == 'false'
@@ -54,6 +52,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           path: boilerplate-update/cookiecutter-gh-project
+          persist-credentials: false
 
       - name: Debug
         run: |
@@ -73,7 +72,7 @@ jobs:
         working-directory: boilerplate-update/cookiecutter-gh-project
         run: |
           git fetch --prune --unshallow
-          git merge ${{ github.head_ref }}
+          git merge origin/develop -X theirs
 
       - uses: actions/cache@v2
         with:
@@ -85,7 +84,8 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: BSFishy/pip-action@v1
         with:
-          requirements: sources/cookiecutter-gh-project/requirements.txt
+          packages: |
+            cookiecutter
 
       - name: Generate Boilerplate Code from Template
         working-directory: boilerplate-update/
@@ -116,7 +116,14 @@ jobs:
         run: |
           git add .
           git commit -m "update boilercode"
-          git push origin lifecycle/boilerplate-update
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        if: steps.changes.outputs.changed == 1
+        with:
+          github_token: ${{ secrets.GH_WORKFLOW_TOKEN }}
+          branch: lifecycle/boilerplate-update
+          directory: boilerplate-update/cookiecutter-gh-project
 
       - uses: actions/github-script@v3.1.0
         if: steps.changes.outputs.changed == 1

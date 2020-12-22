@@ -10,7 +10,8 @@ cookiecutter ./cookiecutter-gh-project \
     description="Template for Create Github Workflows and Projects" \
     template_issues="y" \
     template_pull_request="y" \
-    dependabot_github_actions="y" \
+    plumbing_workflow_enabled="y" \
+    plumbing_workflow_source="../sources/cookiecutter-gh-project" \
     dependabot_pip="y" \
     dependabot_gitsubmodule="n" \
     dependabot_docker="n" \

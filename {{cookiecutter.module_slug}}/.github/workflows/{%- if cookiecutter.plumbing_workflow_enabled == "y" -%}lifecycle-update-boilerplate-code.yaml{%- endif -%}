@@ -100,10 +100,12 @@ jobs:
 {%- if cookiecutter.plumbing_workflow_source != "gh:nolte/cookiecutter-gh-project" %}
             plumbing_workflow_source="{{cookiecutter.plumbing_workflow_source}}" \
 {%- endif %}
+            workflow_deliver_docs_enabled="{{ cookiecutter.workflow_deliver_docs_enabled }}" \
             dependabot_github_actions="{{ cookiecutter.dependabot_github_actions }}" \
             dependabot_pip="{{ cookiecutter.dependabot_pip }}" \
             dependabot_gitsubmodule="{{ cookiecutter.dependabot_gitsubmodule }}" \
             dependabot_docker="{{ cookiecutter.dependabot_docker }}" \
+            dependabot_golang="{{ cookiecutter.dependabot_golang }}" \
             -f --no-input
 
       - name: Check if there are changes

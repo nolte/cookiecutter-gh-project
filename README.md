@@ -12,6 +12,7 @@ cookiecutter ./cookiecutter-gh-project \
     template_pull_request="y" \
     plumbing_workflow_enabled="y" \
     plumbing_workflow_source="../sources/cookiecutter-gh-project" \
+    workflow_deliver_docs_enabled="y" \
     dependabot_pip="y" \
     dependabot_gitsubmodule="n" \
     dependabot_docker="n" \

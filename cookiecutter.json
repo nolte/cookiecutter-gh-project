@@ -8,10 +8,12 @@
   "plumbing_repo":"gh-plumbing",
   "plumbing_workflow_enabled":"n",
   "plumbing_workflow_source":"gh:nolte/cookiecutter-gh-project",
+  "workflow_deliver_docs_enabled":"y",
   "template_issues": "n",
   "template_pull_request": "n",
   "dependabot_github_actions": "y",
   "dependabot_pip": "n",
   "dependabot_gitsubmodule": "n",
-  "dependabot_docker": "n"
+  "dependabot_docker": "n",
+  "dependabot_golang": "n"
 }

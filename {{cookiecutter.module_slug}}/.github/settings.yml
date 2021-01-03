@@ -6,5 +6,7 @@ _extends: {{cookiecutter.plumbing_repo}}:.github/commons-settings.yml
 repository:
   name: {{cookiecutter.name}}
   description: {{cookiecutter.description}}
+  {% if cookiecutter.workflow_deliver_docs_enabled == "y" -%}
   homepage: {{cookiecutter.homepage}}
+  {% endif -%}
   topics: {{cookiecutter.topics}}

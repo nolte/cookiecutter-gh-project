@@ -6,3 +6,4 @@ repos:
         exclude: "{{cookiecutter.module_slug}}/*"
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
+        args: ['--markdown-linebreak-ext=md']

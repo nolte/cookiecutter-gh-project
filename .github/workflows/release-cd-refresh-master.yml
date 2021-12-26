@@ -7,4 +7,5 @@ jobs:
     uses: nolte/gh-plumbing/.github/workflows/reuseable-release-cd-refresh-master.yml@develop
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
+    with:
       target_branch: main

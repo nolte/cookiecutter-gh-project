@@ -1,0 +1,7 @@
+site_name: Github Cookiecutter Templates
+theme: material
+markdown_extensions:
+  - toc:
+      permalink: True
+extra_css:
+  - css/overwrite.css

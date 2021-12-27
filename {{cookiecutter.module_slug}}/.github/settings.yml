@@ -1,0 +1,10 @@
+---
+# These settings are synced to GitHub by https://probot.github.io/apps/settings/
+
+_extends: {{cookiecutter.plumbing_repo}}:.github/commons-settings.yml
+
+repository:
+  name: {{cookiecutter.name}}
+  description: {{cookiecutter.description}}
+  homepage: {{cookiecutter.homepage}}
+  topics: {{cookiecutter.topics}}

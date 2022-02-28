@@ -81,7 +81,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
       - uses: BSFishy/pip-action@v1
         with:
           packages: |

@@ -1,5 +1,0 @@
-_extends: gh-plumbing:.github/commons-settings.yml
-repository:
-  name: cookiecutter-gh-project
-  description: Template for generate Gitlab Projects and Required Structures
-  topics: templating, bootstrap, github

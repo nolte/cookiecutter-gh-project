@@ -74,7 +74,7 @@ jobs:
           git fetch --prune --unshallow
           git merge origin/develop -X theirs
 
-      - uses: actions/cache@v2.1.7
+      - uses: actions/cache@v3.3.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}

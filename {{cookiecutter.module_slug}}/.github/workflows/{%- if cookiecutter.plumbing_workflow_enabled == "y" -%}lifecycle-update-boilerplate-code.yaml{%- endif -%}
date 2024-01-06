@@ -6,7 +6,7 @@ on:
 jobs:
   static:
     name: "Generate Boilerplate Code"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
 
       - run: |
@@ -14,12 +14,12 @@ jobs:
           git config --global user.email github-actions@github.com
 
       - name: Checkout sources
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v4.1.1
         with:
           ref: {{"${{"}} github.head_ref {{"}}"}}
           path: sources/{{ cookiecutter.module_slug }}
 
-      - uses: actions/github-script@v3.1.0
+      - uses: actions/github-script@v7.0.1
         id: boilerplate-update-branch-exists
         with:
           github-token: {{"${{"}}secrets.GITHUB_TOKEN}}
@@ -39,7 +39,7 @@ jobs:
             return true
 
       - name: Checkout boilerplate update branch if exists
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v4.1.1
         if: steps.boilerplate-update-branch-exists.outputs.result == 'true'
         with:
           ref: "lifecycle/boilerplate-update"
@@ -48,7 +48,7 @@ jobs:
 
       - name: Checkout Original to update path
         if: steps.boilerplate-update-branch-exists.outputs.result == 'false'
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v4.1.1
         with:
           ref: {{"${{"}} github.head_ref {{"}}"}}
           path: boilerplate-update/{{ cookiecutter.module_slug }}
@@ -74,14 +74,14 @@ jobs:
           git fetch --prune --unshallow
           git merge origin/develop -X theirs
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3.3.2
         with:
           path: ~/.cache/pip
           key: {{"${{"}} runner.os {{"}}"}}-pip-{{"${{"}} hashFiles('**/requirements.txt') {{"}}"}}
           restore-keys: |
             {{"${{"}} runner.os {{"}}"}}-pip-
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
       - uses: BSFishy/pip-action@v1
         with:
           packages: |
@@ -127,7 +127,7 @@ jobs:
           branch: lifecycle/boilerplate-update
           directory: boilerplate-update/{{ cookiecutter.module_slug }}
 
-      - uses: actions/github-script@v3.1.0
+      - uses: actions/github-script@v7.0.1
         if: steps.changes.outputs.changed == 1
         with:
           github-token: {{"${{"}}secrets.GITHUB_TOKEN{{"}}"}}

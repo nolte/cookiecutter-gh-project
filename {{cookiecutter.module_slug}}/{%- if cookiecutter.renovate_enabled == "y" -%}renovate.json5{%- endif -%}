@@ -1,0 +1,6 @@
+{
+    "extends": [
+      "github>nolte/{{cookiecutter.plumbing_repo}}//renovate-configs/common#v1.0.24",
+      "group:all"
+    ]
+  }

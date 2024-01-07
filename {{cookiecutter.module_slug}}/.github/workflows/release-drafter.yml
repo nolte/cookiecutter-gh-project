@@ -12,3 +12,9 @@ jobs:
     uses: nolte/gh-plumbing/.github/workflows/reuseable-release-drafter.yml@v1.0.24
     secrets:
       token: {{"${{"}} secrets.GITHUB_TOKEN {{"}}"}}
+    permissions:
+      # write permission is required to create a github release
+      contents: write
+      # write permission is required for autolabeler
+      # otherwise, read permission is required at least
+      pull-requests: write

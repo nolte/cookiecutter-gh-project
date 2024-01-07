@@ -7,3 +7,10 @@ jobs:
     uses: nolte/gh-plumbing/.github/workflows/reuseable-mkdocs.yaml@v1.0.24
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+      id-token: write
+      pages: write
+    concurrency:
+      cancel-in-progress: true
+      group: "pages"

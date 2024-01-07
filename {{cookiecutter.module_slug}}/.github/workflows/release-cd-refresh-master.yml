@@ -9,3 +9,5 @@ jobs:
       token: {{"${{"}} secrets.GITHUB_TOKEN {{"}}"}}
     with:
       target_branch: main
+    permissions:
+      contents: write

@@ -1,0 +1,5 @@
+# {{cookiecutter.name}}
+
+<!--intro-start-->
+{{cookiecutter.description}}
+<!--intro-end-->

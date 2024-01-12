@@ -1,0 +1,7 @@
+[Pp]robot
+Ansible
+asdf
+dotfile
+mkdocs
+Taskfile
+zsh

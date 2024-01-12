@@ -1,10 +1,10 @@
 # Template
 
-This Template Project use [Cookiecutter](https://github.com/cookiecutter/cookiecutter) for generate/boostrap Github Projects. With a base set of CI/CD tools and Release Process.
+This Template Project use [CookieCutter](https://github.com/cookiecutter/cookiecutter) for generate/boostrap GitHub Projects. With a base set of CI/CD tools and Release Process.
 
 ## Scope from the Templates
 
-This Template shoud be handle different base Ci/Cd steps.
+This Template should be handle different base Ci/Cd steps.
 
 ### Static Tests
 

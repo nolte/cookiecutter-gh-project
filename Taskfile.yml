@@ -2,10 +2,15 @@
 
 version: '3'
 
+vars:
+  TASK_COLLECTION_BASE: https://raw.githubusercontent.com/nolte/taskfiles/fix/py-var-names/src
+
+includes:
+  mkdocs: "{{.TASK_COLLECTION_BASE}}/taskfile-include-mkdocs.yaml"
+  pre-commit: "{{.TASK_COLLECTION_BASE}}/taskfile-include-pre-commit.yaml"
 
 tasks:
-  generate-project:
-    desc: Start Precommit
+  default:
     cmds:
-      - pre-commit run -a
+    - task -l
     silent: true

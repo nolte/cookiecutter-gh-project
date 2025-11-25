@@ -14,7 +14,7 @@ jobs:
           git config --global user.email github-actions@github.com
 
       - name: Checkout sources
-        uses: actions/checkout@v4.3.1
+        uses: actions/checkout@v6.0.0
         with:
           ref: ${{ github.head_ref }}
           path: sources/cookiecutter-gh-project
@@ -39,7 +39,7 @@ jobs:
             return true
 
       - name: Checkout boilerplate update branch if exists
-        uses: actions/checkout@v4.3.1
+        uses: actions/checkout@v6.0.0
         if: steps.boilerplate-update-branch-exists.outputs.result == 'true'
         with:
           ref: "lifecycle/boilerplate-update"
@@ -48,7 +48,7 @@ jobs:
 
       - name: Checkout Original to update path
         if: steps.boilerplate-update-branch-exists.outputs.result == 'false'
-        uses: actions/checkout@v4.3.1
+        uses: actions/checkout@v6.0.0
         with:
           ref: ${{ github.head_ref }}
           path: boilerplate-update/cookiecutter-gh-project

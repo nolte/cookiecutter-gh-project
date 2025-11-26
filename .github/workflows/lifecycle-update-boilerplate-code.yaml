@@ -6,7 +6,7 @@ on:
 jobs:
   static:
     name: "Generate Boilerplate Code"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
 
       - run: |
@@ -14,12 +14,12 @@ jobs:
           git config --global user.email github-actions@github.com
 
       - name: Checkout sources
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v6.0.0
         with:
           ref: ${{ github.head_ref }}
           path: sources/cookiecutter-gh-project
 
-      - uses: actions/github-script@v5.0.0
+      - uses: actions/github-script@v8.0.0
         id: boilerplate-update-branch-exists
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -39,7 +39,7 @@ jobs:
             return true
 
       - name: Checkout boilerplate update branch if exists
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v6.0.0
         if: steps.boilerplate-update-branch-exists.outputs.result == 'true'
         with:
           ref: "lifecycle/boilerplate-update"
@@ -48,7 +48,7 @@ jobs:
 
       - name: Checkout Original to update path
         if: steps.boilerplate-update-branch-exists.outputs.result == 'false'
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v6.0.0
         with:
           ref: ${{ github.head_ref }}
           path: boilerplate-update/cookiecutter-gh-project
@@ -74,14 +74,14 @@ jobs:
           git fetch --prune --unshallow
           git merge origin/develop -X theirs
 
-      - uses: actions/cache@v2.1.7
+      - uses: actions/cache@v4.3.0
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v6
       - uses: BSFishy/pip-action@v1
         with:
           packages: |
@@ -125,7 +125,7 @@ jobs:
           branch: lifecycle/boilerplate-update
           directory: boilerplate-update/cookiecutter-gh-project
 
-      - uses: actions/github-script@v5.0.0
+      - uses: actions/github-script@v8.0.0
         if: steps.changes.outputs.changed == 1
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}

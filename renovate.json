@@ -1,9 +1,11 @@
 {
   "extends": [
-    "config:base",
+    "config:recommended",
     ":dependencyDashboard"
   ],
   "pip_requirements": {
-    "fileMatch": ["requirements.*.txt"]
+    "managerFilePatterns": [
+      "/requirements.*.txt/"
+    ]
   }
 }

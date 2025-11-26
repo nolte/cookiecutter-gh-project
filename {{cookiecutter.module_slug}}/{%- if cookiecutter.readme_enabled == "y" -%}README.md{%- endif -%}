@@ -1,0 +1,10 @@
+# {{cookiecutter.name}}
+
+[![GitHub Project Stars](https://img.shields.io/GitHub/stars/nolte/{{cookiecutter.name}}.svg?label=Stars&style=social)](https://GitHub.com/nolte/{{cookiecutter.name}}) [![GitHub Issue Tracking](https://img.shields.io/GitHub/issues-raw/nolte/{{cookiecutter.name}}.svg)](https://GitHub.com/nolte/{{cookiecutter.name}}) [![GitHub LatestRelease](https://img.shields.io/GitHub/release/nolte/{{cookiecutter.name}}.svg)](https://GitHub.com/nolte/{{cookiecutter.name}}) [![.GitHub/workflows/build-static-tests.yaml](https://GitHub.com/nolte/{{cookiecutter.name}}/actions/workflows/build-static-tests.yaml/badge.svg)](https://GitHub.com/nolte/{{cookiecutter.name}}/actions/workflows/build-static-tests.yaml) [![.GitHub/workflows/release-cd-deliver-docs.yml](https://GitHub.com/nolte/{{cookiecutter.name}}/actions/workflows/release-cd-deliver-docs.yml/badge.svg)](https://GitHub.com/nolte/{{cookiecutter.name}}/actions/workflows/release-cd-deliver-docs.yml)
+
+---
+
+
+<!--intro-start-->
+{{cookiecutter.description}}
+<!--intro-end-->

@@ -1,9 +1,9 @@
-site_name: Github Cookiecutter Templates
+site_name: "{{cookiecutter.name}}"
 theme:
   name: material
 docs_dir: docs/
-repo_name: 'nolte/cookiecutter-gh-project'
-repo_url: 'https://github.com/nolte/cookiecutter-gh-project'
+repo_name: 'nolte/{{cookiecutter.module_slug}}'
+repo_url: 'https://github.com/nolte/{{cookiecutter.module_slug}}'
 plugins:
   - include-markdown
 markdown_extensions:

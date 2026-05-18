@@ -6,3 +6,86 @@ jobs:
     uses: nolte/gh-plumbing/.github/workflows/reusable-pre-commit.yaml@v1.1.18
   security:
     uses: nolte/gh-plumbing/.github/workflows/reusable-trivy.yaml@v1.1.18
+
+  render:
+    name: "Render template (positive + negative)"
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6.0.0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install cookiecutter + pre-commit
+        run: |
+          pip install -r requirements.txt
+          pip install pre-commit==4.5.0
+
+      - name: Render — defaults (all-n flags)
+        run: |
+          cookiecutter . -f --no-input --output-dir /tmp/render-default \
+            module_slug="ci-default-test" \
+            topics="ci-test" \
+            description="default render scenario"
+
+      - name: pre-commit on default render output
+        working-directory: /tmp/render-default/ci-default-test
+        run: |
+          git init -q
+          git add -A
+          pre-commit run --all-files --show-diff-on-failure
+
+      - name: Render — all-yes
+        run: |
+          cookiecutter . -f --no-input --output-dir /tmp/render-allyes \
+            module_slug="ci-allyes-test" \
+            topics="ci-test" \
+            description="all-yes render scenario" \
+            plumbing_workflow_enabled="y" \
+            template_issues="y" \
+            template_pull_request="y" \
+            renovate_enabled="y" \
+            readme_enabled="y" \
+            docs_enabled="y" \
+            dependabot_enabled="y" \
+            dependabot_pip="y" \
+            dependabot_gitsubmodule="y" \
+            dependabot_docker="y"
+
+      - name: pre-commit on all-yes render output
+        working-directory: /tmp/render-allyes/ci-allyes-test
+        run: |
+          git init -q
+          git add -A
+          pre-commit run --all-files --show-diff-on-failure
+
+      - name: mkdocs build on all-yes render output
+        working-directory: /tmp/render-allyes/ci-allyes-test
+        run: |
+          pip install -r requirements-dev.txt
+          mkdocs build --strict
+
+      - name: Negative — invalid module_slug must fail pre-gen hook
+        run: |
+          set +e
+          cookiecutter . -f --no-input --output-dir /tmp/render-invalid \
+            module_slug="Invalid Slug!" topics="x" description="x"
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            echo "ERROR: render with invalid module_slug succeeded but must fail" >&2
+            exit 1
+          fi
+          echo "OK: pre-gen hook rejected invalid slug as expected (exit=$status)"
+
+      - name: Negative — empty module_slug must fail pre-gen hook
+        run: |
+          set +e
+          cookiecutter . -f --no-input --output-dir /tmp/render-empty \
+            module_slug="" topics="x" description="x"
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            echo "ERROR: render with empty module_slug succeeded but must fail" >&2
+            exit 1
+          fi
+          echo "OK: pre-gen hook rejected empty slug as expected (exit=$status)"

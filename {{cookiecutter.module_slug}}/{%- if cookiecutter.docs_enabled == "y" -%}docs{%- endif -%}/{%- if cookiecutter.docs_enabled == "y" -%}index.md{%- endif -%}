@@ -1,4 +1,4 @@
-# {{cookiecutter.name}}
+# {{cookiecutter.__name}}
 {% raw %}
 {%
    include-markdown "../README.md"

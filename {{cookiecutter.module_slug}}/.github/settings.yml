@@ -4,7 +4,7 @@
 _extends: {{cookiecutter.plumbing_repo}}:.github/commons-settings.yml
 
 repository:
-  name: {{cookiecutter.name}}
+  name: {{cookiecutter.__name}}
   description: {{cookiecutter.description}}
-  homepage: {{cookiecutter.homepage}}
+  homepage: {{cookiecutter.__homepage}}
   topics: {{cookiecutter.topics}}

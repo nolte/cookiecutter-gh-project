@@ -20,9 +20,11 @@ The Generated Project has:
 
 Using [cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter) directly for generate a new GitHub Project Structure.
 
+**Pin to a release tag** with `--checkout` so the template version you render against is reproducible — without it, cookiecutter pulls the moving `develop` tip and your output drifts on every regeneration. Recent tags are listed on the [releases page](https://github.com/nolte/cookiecutter-gh-project/releases).
+
 <!--usage-cmd-start-->
 ```sh
-cookiecutter gh:nolte/cookiecutter-gh-project \
+cookiecutter gh:nolte/cookiecutter-gh-project --checkout v0.0.5 \
     module_slug="cookiecutter-gh-project" \
     topics="templating, cookiecutter, github" \
     description="Template for Create GitHub Workflows and Projects" \

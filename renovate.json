@@ -1,5 +1,6 @@
 {
   "extends": [
+    "github>nolte/gh-plumbing//renovate-configs/common#v1.1.18",
     "config:recommended",
     ":dependencyDashboard"
   ],

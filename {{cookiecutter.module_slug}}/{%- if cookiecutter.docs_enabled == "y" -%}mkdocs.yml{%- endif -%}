@@ -1,4 +1,4 @@
-site_name: "{{cookiecutter.name}}"
+site_name: "{{cookiecutter.__name}}"
 theme:
   name: material
 docs_dir: docs/

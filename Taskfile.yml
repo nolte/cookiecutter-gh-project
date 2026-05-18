@@ -4,6 +4,7 @@ version: '3'
 
 vars:
   TASK_COLLECTION_BASE: https://raw.githubusercontent.com/nolte/taskfiles/fix/py-var-names/src
+  TEST_OUTPUT_DIR: /tmp/cookiecutter-gh-project-test
 
 includes:
   mkdocs: "{{.TASK_COLLECTION_BASE}}/taskfile-include-mkdocs.yaml"
@@ -14,3 +15,30 @@ tasks:
     cmds:
     - task -l
     silent: true
+
+  lint:
+    desc: Run pre-commit hooks across the repository
+    cmds:
+    - task: pre-commit:run
+
+  docs:
+    desc: Build the MkDocs site
+    cmds:
+    - task: mkdocs:build
+
+  test:
+    desc: Smoke-test the template by regenerating it into TEST_OUTPUT_DIR
+    cmds:
+    - rm -rf "{{.TEST_OUTPUT_DIR}}"
+    - mkdir -p "{{.TEST_OUTPUT_DIR}}"
+    - >
+      cookiecutter . -f --no-input
+      --output-dir "{{.TEST_OUTPUT_DIR}}"
+      module_slug="cookiecutter-gh-project"
+      topics="templating, cookiecutter, github"
+      description="Template for Create GitHub Workflows and Projects"
+      template_issues="y"
+      template_pull_request="y"
+      readme_enabled="y"
+      docs_enabled="y"
+      renovate_enabled="y"

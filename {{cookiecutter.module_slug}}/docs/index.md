@@ -1,8 +1,9 @@
 # {{cookiecutter.__name}}
-{% raw %}
+
+{% raw -%}
 {%
    include-markdown "../README.md"
    start="<!--intro-start-->"
    end="<!--intro-end-->"
 %}
-{% endraw %}
+{% endraw -%}

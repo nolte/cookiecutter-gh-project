@@ -1,0 +1,61 @@
+name: "🐛 Bug Report"
+description: "Report something that isn't working as expected"
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. The fields below help maintainers reproduce the issue faster — please fill them in before submitting.
+
+  - type: input
+    id: release
+    attributes:
+      label: Used release
+      description: Which version, release, or commit SHA are you running?
+      placeholder: "v1.2.3 or abc1234"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: What actually happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can a maintainer reproduce the issue locally?
+      placeholder: |
+        1. …
+        2. …
+        3. …
+    validations:
+      required: true
+
+  - type: textarea
+    id: debug-output
+    attributes:
+      label: Debug output (optional)
+      description: |
+        Paste a link to a GitHub Gist containing the complete debug output. **Do not paste the output directly in the issue** — and scrub it for credentials before sharing.
+      placeholder: "https://gist.github.com/…"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context (optional)
+      description: |
+        Anything atypical about your environment that maintainers should know — OS, runtime version, container, custom configuration.

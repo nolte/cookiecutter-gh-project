@@ -3,9 +3,9 @@ on:
 
 jobs:
   static:
-    uses: nolte/gh-plumbing/.github/workflows/reusable-pre-commit.yaml@v1.1.18
+    uses: nolte/gh-plumbing/.github/workflows/reusable-pre-commit.yaml@v1.1.19
   security:
-    uses: nolte/gh-plumbing/.github/workflows/reusable-trivy.yaml@v1.1.18
+    uses: nolte/gh-plumbing/.github/workflows/reusable-trivy.yaml@v1.1.19
 
   render:
     name: "Render template (positive + negative)"

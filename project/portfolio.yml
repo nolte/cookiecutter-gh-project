@@ -1,0 +1,21 @@
+# Portfolio manifest for nolte/cookiecutter-gh-project.
+# Schema: spec/portfolio/portfolio-management/ §Capability inventory per repository
+# Audience references resolve against AUDIENCES.md at the repo root.
+
+capabilities:
+  - name: github-project-cookiecutter-template
+    description: >-
+      A Cookiecutter template that scaffolds a standardised nolte-style GitHub
+      project — pre-wired GitHub Actions and settings based on nolte/gh-plumbing
+      (release process, MkDocs docs publishing, static tests, labelling) — from
+      a single cookiecutter run.
+    audience:
+      - "Developer scaffolding a new nolte-style GitHub project"
+    status: active
+    rationale: >-
+      This repository owns the project-scaffolding template in the portfolio;
+      consolidating the standard layout here means new repositories start from
+      one consistent, gh-plumbing-aligned baseline.
+    peers:
+      - gh-plumbing:reusable-github-actions-workflows
+      - gh-plumbing:probot-commons-config

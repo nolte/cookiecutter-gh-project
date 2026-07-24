@@ -19,3 +19,26 @@ capabilities:
     peers:
       - gh-plumbing:reusable-github-actions-workflows
       - gh-plumbing:probot-commons-config
+
+# tech_stack: repo-specific deltas vs the inherited portfolio baseline
+# (portfolio/tech-stack.yml). Schema: spec/portfolio/tech-stack/ §Per-repository block.
+tech_stack:
+  additions:
+    - name: python
+      kind: language
+      group: build-tooling
+      version: "3.14.0"
+      role: Implementation language for the Cookiecutter pre/post-generation hooks and the pytest-cookies harness.
+      status: active
+      lifecycle: build
+      source_of_truth: .tool-versions
+      rationale: >-
+        python here drives the template-generation hooks and tests rather than an application
+        runtime, so it is grouped under build-tooling.
+    - name: cookiecutter
+      kind: framework
+      group: build-tooling
+      role: Project-template engine defining the repository's shape; renders a new project from cookiecutter.json plus hooks.
+      status: active
+      lifecycle: build
+      source_of_truth: cookiecutter.json
